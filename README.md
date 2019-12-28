@@ -28,7 +28,7 @@ const query = `Age <= 25 AND (Gender = "Male" OR School contains "School")`;
 const Obj = FQP.parse(query);
 ```
 
-Return filtered items.
+Returns
 
 ```sh
 {
@@ -68,7 +68,7 @@ const Obj = {
 const query = FQP.stringify(Obj);
 ```
 
-Return filtered items.
+Returns
 
 ```sh
 Age <= 25 AND (Gender = "Male" OR School contains "School")
