@@ -13,7 +13,7 @@ function queryBuilder(obj = []) {
 	rules.forEach((r, i) => {
 		if (r.hasOwnProperty('field')) {
 			if(qStr) {
-				qStr = `${qStr} ${conditionBuilder(r)}`;
+				qStr = `${qStr}${conditionBuilder(r)}`;
 			} else {
 				qStr = conditionBuilder(r);
 			}
@@ -40,6 +40,18 @@ FQP.__proto__.stringify = function(obj) {
 		}
 	} else {
 		throw "Invalid object";
+	}
+}
+
+FQP.__proto__.parser = function(query) {
+	const parsedVal = FQP.parse(query);
+	if (typeof parsedVal === 'object' && parsedVal.hasOwnProperty('field')) {
+		return {
+			condition: 'AND',
+			rules: [parsedVal]
+		};
+	} else {
+		return parsedVal;
 	}
 }
 

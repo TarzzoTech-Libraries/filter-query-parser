@@ -24,7 +24,7 @@ Parse the query string to JavaScript Object
 
 ```sh
 const query = `Age <= 25 AND (Gender = "Male" OR School contains "School")`;
-const Obj = FQP.parse(query);
+const Obj = FQP.parser(query);
 ```
 
 Returns

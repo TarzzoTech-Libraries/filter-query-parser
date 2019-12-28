@@ -12,9 +12,15 @@
         const query = `Country = "India" OR (State = "Tamil Nadu" OR State = "Andhra Pradesh")`;
         const query1 = `Country = "India" AND State = "Tamil Nadu"`;
         const query2 = `Age <= 25 AND (Gender = "Male" OR School contains "School")`;
-        console.log(FQP.parse(query));
-        console.log(FQP.parse(query1));
-        console.log(FQP.parse(query2));
+        const query3 = `Age <= 25`;
+        const query4 = `Country STARTS WITH "I"`;
+        const query5 = `Country ENDS WITH "a"`;
+        console.log(FQP.parser(query));
+        console.log(FQP.parser(query1));
+        console.log(FQP.parser(query2));
+        console.log(FQP.parser(query3));
+        console.log(FQP.parser(query4));
+        console.log(FQP.parser(query5));
 
         const res = {
             "condition":"AND",
@@ -31,9 +37,12 @@
             ],
             "not":false
         };
-        console.log(FQP.stringify(FQP.parse(query)));
-        console.log(FQP.stringify(FQP.parse(query1)));
-        console.log(FQP.stringify(FQP.parse(query2)));
+        console.log(FQP.stringify(FQP.parser(query)));
+        console.log(FQP.stringify(FQP.parser(query1)));
+        console.log(FQP.stringify(FQP.parser(query2)));
+        console.log(FQP.stringify(FQP.parser(query3)));
+        console.log(FQP.stringify(FQP.parser(query4)));
+        console.log(FQP.stringify(FQP.parser(query5)));
     </script>
 </body>
 </html>

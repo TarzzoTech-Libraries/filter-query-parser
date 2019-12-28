@@ -16,7 +16,17 @@
         }
     };
 
-    const cops = [['GE', '>='], ['LE', '<='], ['EQ', '='], ['NE', '!=='], ['GT', '>'], ['LT', '<'], ['CONTAINS', 'CONTAINS']];
+    const cops = [
+        ['GE', '>='],
+        ['LE', '<='],
+        ['EQ', '='],
+        ['NE', '!=='],
+        ['GT', '>'],
+        ['LT', '<'],
+        ['CONTAINS', 'CONTAINS'],
+        ['SW', 'STARTS WITH'],
+        ['EW', 'ENDS WITH']
+    ];
     class ComparisonOperator {
         constructor(name, op) {
             this.name = name;
@@ -66,10 +76,9 @@
     }
 
     class RuleSet {
-        constructor(op, conditions, not=false) {
+        constructor(op, conditions) {
             this.condition = op;
             this.rules = conditions;
-            this.not = not;
         }
     }
 
@@ -89,6 +98,8 @@ GE       = ">="
 LT       = "<"
 LE       = "<="
 CONTAINS = v:("CONTAINS" / "contains") { return v.toUpperCase(); }
+SW = v:("STARTS WITH" / "starts with") { return v.toUpperCase(); }
+EW = v:("ENDS WITH" / "ends with") { return v.toUpperCase(); }
 L_PAR    = "("
 R_PAR    = ")"
 DQ       = '"'
@@ -128,7 +139,7 @@ Char
 
 ///// Operators /////
 ComparisonOperator
-  = op:(GE / LE / EQ / NE / GT / LT / CONTAINS) { return ComparisonOperator.fromString(text()); }
+  = op:(GE / LE / EQ / NE / GT / LT / CONTAINS / SW / EW) { return ComparisonOperator.fromString(text()); }
 
 LogicalOperator
   = AND / OR { return LogicalOperator.fromString(text()); }
