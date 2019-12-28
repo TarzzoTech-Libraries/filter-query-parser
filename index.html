@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Filter Query Parser/Stringify</title>
+</head>
+<body>
+    <script src="dist/FQP.js"></script>
+    <script>
+        const query = `Country = "India" OR (State = "Tamil Nadu" OR State = "Andhra Pradesh")`;
+        const query1 = `Country = "India" AND State = "Tamil Nadu"`;
+        const query2 = `Age <= 25 AND (Gender = "Male" OR School contains "School")`;
+        console.log(FQP.parse(query));
+        console.log(FQP.parse(query1));
+        console.log(FQP.parse(query2));
+
+        const res = {
+            "condition":"AND",
+            "rules": [
+                {"field":"Age","operator":"<=","value":25},
+                {
+                    "condition":"OR",
+                    "rules": [
+                        {"field":"Gender","operator":"=","value":"Male"},
+                        {"field":"School","operator":"CONTAINS","value":"School"}
+                    ],
+                    "not":false
+                }
+            ],
+            "not":false
+        };
+        console.log(FQP.stringify(FQP.parse(query)));
+        console.log(FQP.stringify(FQP.parse(query1)));
+        console.log(FQP.stringify(FQP.parse(query2)));
+    </script>
+</body>
+</html>
