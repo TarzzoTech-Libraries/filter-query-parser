@@ -22,7 +22,6 @@ const FQP = require('..../FQP/dist/FQP.js').FQP;
 
 Parse the query string to JavaScript Object
 
-Query sample 1
 ```sh
 const query = `Age <= 25 AND (Gender = "Male" OR School contains "School")`;
 const Obj = FQP.parse(query);
@@ -47,8 +46,8 @@ Returns
   "not":false
 }
 ```
+Stringify JavaScript Object to query string
 
-Query sample 2
 ```sh
 const Obj = {
         "condition":"AND",
