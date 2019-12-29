@@ -2,6 +2,8 @@
 
 Library for parsing the query string to an Object form and stringify Object to query string.
 
+[Try](https://vjd7.github.io/filter-query-parser/) it in console by typing FQP.
+
 
 ## Installation
 ```sh
@@ -105,6 +107,8 @@ Age <= 25 AND (Gender = "Male" OR School contains "School")
 | >        | greater than                                                                                                                             |
 | <        | less than                                                                                                                                |
 | CONTAINS | Check if right value contains left value when right value is String<br>Or check if right value is in left array when left value is Array |
+| STARTS WITH | Check the value is starts with the right value                                                                                        |
+| ENDS WITH | Check the value is ends with the right value                                                                                            |
 
 
 ### Query examples
