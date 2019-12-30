@@ -15,22 +15,28 @@
         const query3 = `Age <= 25`;
         const query4 = `Country STARTS WITH "I"`;
         const query5 = `Country ENDS WITH "a"`;
+        const query6 = `CustomerName LIKE "a%"`;
+        const query7 = `Name DOES NOT CONTAIN "A"`;
+        const query8 = `Name EXACTLY MATCHES "Vijay"`;
         console.log(FQP.parser(query));
         console.log(FQP.parser(query1));
         console.log(FQP.parser(query2));
         console.log(FQP.parser(query3));
         console.log(FQP.parser(query4));
         console.log(FQP.parser(query5));
+        console.log(FQP.parser(query6));
+        console.log(FQP.parser(query7));
+        console.log(FQP.parser(query8));
 
         const res = {
             "condition":"AND",
             "rules": [
-                {"field":"Age","operator":"<=","value":25},
+                {"name":"Age","operator":"<=","value":25},
                 {
                     "condition":"OR",
                     "rules": [
-                        {"field":"Gender","operator":"=","value":"Male"},
-                        {"field":"School","operator":"CONTAINS","value":"School"}
+                        {"name":"Gender","operator":"=","value":"Male"},
+                        {"name":"School","operator":"CONTAINS","value":"School"}
                     ],
                     "not":false
                 }
@@ -43,6 +49,10 @@
         console.log(FQP.stringify(FQP.parser(query3)));
         console.log(FQP.stringify(FQP.parser(query4)));
         console.log(FQP.stringify(FQP.parser(query5)));
+        console.log(FQP.stringify(res, 'name'));
+        console.log(FQP.stringify(FQP.parser(query6)));
+        console.log(FQP.stringify(FQP.parser(query7)));
+        console.log(FQP.stringify(FQP.parser(query8)));
     </script>
 </body>
 </html>

@@ -20,12 +20,15 @@
         ['GE', '>='],
         ['LE', '<='],
         ['EQ', '='],
-        ['NE', '!=='],
+        ['NE', '!='],
         ['GT', '>'],
         ['LT', '<'],
         ['CONTAINS', 'CONTAINS'],
         ['SW', 'STARTS WITH'],
-        ['EW', 'ENDS WITH']
+        ['EW', 'ENDS WITH'],
+        ['EM', 'EXACTLY MATCHES'],
+        ['DNCONTAIN', 'DOES NOT CONTAIN'],
+        ['LIKE', 'LIKE']
     ];
     class ComparisonOperator {
         constructor(name, op) {
@@ -44,20 +47,20 @@
 
         static fromString(str) {
             switch (str) {
-            case '=':
-        str = '='; break;
-            case '!=':
-        str = '!=='; break;
-            default:
-            str = str.toUpperCase(); break;
+                case '=':
+                    str = '='; break;
+                case '!=':
+                    str = '!='; break;
+                default:
+                    str = str.toUpperCase(); break;
             }
             const items = cops.map(x => ComparisonOperator[x[0]]);
-        for (const item of items) {
-            if (item.op === str) {
-                    return item;
-                }
-        }
-        throw new Error(`Not supported: comparison operator:${str}`);
+            for (const item of items) {
+                if (item.op === str) {
+                        return item;
+                    }
+            }
+            throw new Error(`Not supported: comparison operator:${str}`);
         }
     }
     for (const cop of cops) {
@@ -106,6 +109,9 @@ DQ       = '"'
 TRUE     = 'true'
 FALSE    = 'false'
 NOT      = '!'
+EM      = v:("EXACTLY MATCHES" / "exactly matches") { return v.toUpperCase(); }
+DNCONTAIN = v:("DOES NOT CONTAIN" / "does not contain") { return v.toUpperCase(); }
+LIKE     = v:("LIKE" / "like") { return v.toUpperCase(); }
 
 
 ///// Types /////
@@ -139,7 +145,9 @@ Char
 
 ///// Operators /////
 ComparisonOperator
-  = op:(GE / LE / EQ / NE / GT / LT / CONTAINS / SW / EW) { return ComparisonOperator.fromString(text()); }
+  = op:(GE / LE / EQ / NE / GT / LT / CONTAINS / SW / EW / DNCONTAIN / LIKE / EM) {
+      return ComparisonOperator.fromString(text());
+    }
 
 LogicalOperator
   = AND / OR { return LogicalOperator.fromString(text()); }
