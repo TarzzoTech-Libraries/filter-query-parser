@@ -1,5 +1,6 @@
 function conditionBuilder(rule, customField) {
-	const value = typeof rule.value === 'string' ? `"${rule.value}"` : rule.value;
+	const value = typeof rule.value === 'string' ?
+		`"${rule.value}"` : typeof rule.value === 'object' ? `(${rule.value})` : rule.value;
 	let condStr = `${rule[customField] || rule.field} ${rule.operator} ${value}`;
 	return condStr;
 }

@@ -28,7 +28,11 @@
         ['EW', 'ENDS WITH'],
         ['EM', 'EXACTLY MATCHES'],
         ['DNCONTAIN', 'DOES NOT CONTAIN'],
-        ['LIKE', 'LIKE']
+        ['LIKE', 'LIKE'],
+        ['BTW', 'BETWEEN'],
+        ['NBTW', 'NOT BETWEEN'],
+        ['IN', 'IN'],
+        ['NIN', 'NOT IN']
     ];
     class ComparisonOperator {
         constructor(name, op) {
@@ -106,12 +110,17 @@ EW = v:("ENDS WITH" / "ends with") { return v.toUpperCase(); }
 L_PAR    = "("
 R_PAR    = ")"
 DQ       = '"'
+SC       = ","
 TRUE     = 'true'
 FALSE    = 'false'
 NOT      = '!'
 EM      = v:("EXACTLY MATCHES" / "exactly matches") { return v.toUpperCase(); }
 DNCONTAIN = v:("DOES NOT CONTAIN" / "does not contain") { return v.toUpperCase(); }
 LIKE     = v:("LIKE" / "like") { return v.toUpperCase(); }
+BTW     = v:("BETWEEN" / "between") { return v.toUpperCase(); }
+NBTW     = v:("NOT BETWEEN" / "not between") { return v.toUpperCase(); }
+IN     = v:("IN" / "in") { return v.toUpperCase(); }
+NIN     = v:("NOT IN" / "not in") { return v.toUpperCase(); }
 
 
 ///// Types /////
@@ -145,7 +154,7 @@ Char
 
 ///// Operators /////
 ComparisonOperator
-  = op:(GE / LE / EQ / NE / GT / LT / CONTAINS / SW / EW / DNCONTAIN / LIKE / EM) {
+  = op:(GE / LE / EQ / NE / GT / LT / CONTAINS / SW / EW / DNCONTAIN / LIKE / EM / BTW / NBTW / IN / NIN) {
       return ComparisonOperator.fromString(text());
     }
 
@@ -205,7 +214,20 @@ _RuleSet
 	    }
 	return cg;
       }
-    )?	
+    )?
+
+BTWValues = L_PAR v1:Value ws AND ws v2:Value R_PAR { return [v1, v2]; }
+
+ElementList
+  = head:Value
+    tail:(SC ws rest:Value { return rest; })*
+    {
+        return [head].concat(tail);
+    }
+
+INValues = L_PAR v:ElementList R_PAR { return v; }
 
 Rule
   = k:Key ws op:ComparisonOperator ws v:Value { return new Rule(k, op, v); }
+    / k:Key ws op:ComparisonOperator ws v:BTWValues { return new Rule(k, op, v); }
+    / k:Key ws op:ComparisonOperator ws v:INValues { return new Rule(k, op, v); }

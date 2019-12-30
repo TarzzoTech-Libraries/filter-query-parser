@@ -112,6 +112,11 @@ Age <= 25 AND (Gender = "Male" OR School contains "School")
 | LIKE      | Check the value is LIKE the right value                                                                                                 |
 | DOES NOT CONTAIN | Check the value DOES NOT CONTAIN the right value                                                                                 |
 | EXACTLY MATCHES | Check the value EXACTLY MATCHES with the right value                                                                              |
+| BETWEEN  | Check the value are BETWEEN the right values                                                                                             |
+| NOT BETWEEN | Check the value are NOT BETWEEN the right values                                                                                      |
+| IN       | Check the value are IN the right values                                                                                                  |
+| NOT IN   | Check the value are NOT IN the right values                                                                                              |
+
 
 
 ### Query examples
