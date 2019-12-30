@@ -109,6 +109,9 @@ Age <= 25 AND (Gender = "Male" OR School contains "School")
 | CONTAINS | Check if right value contains left value when right value is String<br>Or check if right value is in left array when left value is Array |
 | STARTS WITH | Check the value is starts with the right value                                                                                        |
 | ENDS WITH | Check the value is ends with the right value                                                                                            |
+| LIKE      | Check the value is LIKE the right value                                                                                                 |
+| DOES NOT CONTAIN | Check the value DOES NOT CONTAIN the right value                                                                                 |
+| EXACTLY MATCHES | Check the value EXACTLY MATCHES with the right value                                                                              |
 
 
 ### Query examples
