@@ -18,6 +18,10 @@
         const query6 = `CustomerName LIKE "a%"`;
         const query7 = `Name DOES NOT CONTAIN "A"`;
         const query8 = `Name EXACTLY MATCHES "Vijay"`;
+        const query9 = `Price BETWEEN (10 AND 30)`;
+        const query10 = `Price NOT BETWEEN (10 AND 30)`;
+        const query11 = `Price IN (10, 20,30)`;
+        const query12 = `Price NOT IN (10, 20,30)`;
         console.log(FQP.parser(query));
         console.log(FQP.parser(query1));
         console.log(FQP.parser(query2));
@@ -27,6 +31,10 @@
         console.log(FQP.parser(query6));
         console.log(FQP.parser(query7));
         console.log(FQP.parser(query8));
+        console.log(FQP.parser(query9));
+        console.log(FQP.parser(query10));
+        console.log(FQP.parser(query11));
+        console.log(FQP.parser(query12));
 
         const res = {
             "condition":"AND",
@@ -53,6 +61,10 @@
         console.log(FQP.stringify(FQP.parser(query6)));
         console.log(FQP.stringify(FQP.parser(query7)));
         console.log(FQP.stringify(FQP.parser(query8)));
+        console.log(FQP.stringify(FQP.parser(query9)));
+        console.log(FQP.stringify(FQP.parser(query10)));
+        console.log(FQP.stringify(FQP.parser(query11)));
+        console.log(FQP.stringify(FQP.parser(query12)));
     </script>
 </body>
 </html>
