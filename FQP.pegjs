@@ -32,7 +32,9 @@
         ['BTW', 'BETWEEN'],
         ['NBTW', 'NOT BETWEEN'],
         ['IN', 'IN'],
-        ['NIN', 'NOT IN']
+        ['NIN', 'NOT IN'],
+        ['NULL', 'NULL'],
+        ['NNULL', 'NOT NULL']
     ];
     class ComparisonOperator {
         constructor(name, op) {
@@ -121,6 +123,8 @@ BTW     = v:("BETWEEN" / "between") { return v.toUpperCase(); }
 NBTW     = v:("NOT BETWEEN" / "not between") { return v.toUpperCase(); }
 IN     = v:("IN" / "in") { return v.toUpperCase(); }
 NIN     = v:("NOT IN" / "not in") { return v.toUpperCase(); }
+NULL     = v:("NULL" / "null") { return v.toUpperCase(); }
+NNULL     = v:("NOT NULL" / "not null") { return v.toUpperCase(); }
 
 
 ///// Types /////
@@ -154,7 +158,15 @@ Char
 
 ///// Operators /////
 ComparisonOperator
-  = op:(GE / LE / EQ / NE / GT / LT / CONTAINS / SW / EW / DNCONTAIN / LIKE / EM / BTW / NBTW / IN / NIN) {
+  = op:(
+      GE / LE / EQ / NE / GT / LT / CONTAINS / SW / EW / DNCONTAIN 
+      / LIKE / EM / BTW / NBTW / IN / NIN
+      ) {
+      return ComparisonOperator.fromString(text());
+    }
+
+NULLOperator
+  = op:(NULL / NNULL) {
       return ComparisonOperator.fromString(text());
     }
 
@@ -231,3 +243,4 @@ Rule
   = k:Key ws op:ComparisonOperator ws v:Value { return new Rule(k, op, v); }
     / k:Key ws op:ComparisonOperator ws v:BTWValues { return new Rule(k, op, v); }
     / k:Key ws op:ComparisonOperator ws v:INValues { return new Rule(k, op, v); }
+    / k:Key ws op:NULLOperator { return new Rule(k, op, ''); }
