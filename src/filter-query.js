@@ -1,8 +1,37 @@
+function buildArrayValues(values) {
+	let txt = ''
+	values.forEach((val,i) =>{      
+		txt += (typeof val === 'string' ? `"${val}"` : val);
+		if (i !== values.length - 1) {
+			txt += ',';
+		}
+	});
+	return txt;
+}
+
 function conditionBuilder(rule, customField) {
-	const value = typeof rule.value === 'string' ?
-		`"${rule.value}"` : typeof rule.value === 'object' ? `(${rule.value})` : rule.value;
-	let condStr = `${rule[customField] || rule.field} ${rule.operator} ${value}`;
+	const value = rule.value && typeof rule.value === 'string' ?
+	  `"${rule.value}"` : typeof rule.value === 'object' ? `(${buildArrayValues(rule.value)})` : rule.value;
+	const condStr = `${rule[customField] || rule.field} ${getOperator(rule.operator)} ${value}`;
 	return condStr;
+}
+
+function getOperator(operator){
+	switch(operator){
+	  case("greater than"):
+	   return ">"; 
+	   case("lesser than"):
+	   return "<";
+	   case("greater than or equals"):
+	   return ">="; 
+	   case("lesser than or equals"):
+	   return "<=";
+	   case("equals"):
+	   return "=";
+	   case("not equals"):
+	   return "!=";
+	   default : return operator;
+	}
 }
 
 function queryBuilder(obj = [], customField) {

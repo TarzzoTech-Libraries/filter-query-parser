@@ -17,12 +17,12 @@
     };
 
     const cops = [
-        ['GE', '>='],
-        ['LE', '<='],
-        ['EQ', '='],
-        ['NE', '!='],
-        ['GT', '>'],
-        ['LT', '<'],
+        ['GE', 'greater than or equals'],
+        ['LE', 'lesser than or equals'],
+        ['EQ', 'equals'],
+        ['NE', 'not equals'],
+        ['GT', 'greater than'],
+        ['LT', 'lesser than'],
         ['CONTAINS', 'CONTAINS'],
         ['SW', 'STARTS WITH'],
         ['EW', 'ENDS WITH'],
@@ -33,8 +33,8 @@
         ['NBTW', 'NOT BETWEEN'],
         ['IN', 'IN'],
         ['NIN', 'NOT IN'],
-        ['NULL', 'NULL'],
-        ['NNULL', 'NOT NULL']
+        ['NULL', 'IS NULL'],
+        ['NNULL', 'IS NOT NULL']
     ];
     class ComparisonOperator {
         constructor(name, op) {
@@ -54,9 +54,17 @@
         static fromString(str) {
             switch (str) {
                 case '=':
-                    str = '='; break;
+                    str = 'equals'; break;
                 case '!=':
-                    str = '!='; break;
+                    str = 'not equals'; break;
+                case '>':
+                    str = 'greater than'; break;
+                case '<':
+                    str = 'lesser than'; break;
+                case '>=':
+                    str = 'greater than or equals'; break;
+                case '<=':
+                    str = 'lesser than or equals'; break;
                 default:
                     str = str.toUpperCase(); break;
             }
@@ -98,17 +106,17 @@ start = Expression
 
 ///// Keywords /////
 Escape   = "\\"
-AND      = v:("AND" / "and") { return v.toUpperCase(); }
-OR       = v:("OR" / "or") { return v.toUpperCase(); }
+AND      = v:("AND" / "and") { return v.toLowerCase(); }
+OR       = v:("OR" / "or") { return v.toLowerCase(); }
 EQ       = "="
 NE       = "!="
 GT       = ">"
 GE       = ">="
 LT       = "<"
 LE       = "<="
-CONTAINS = v:("CONTAINS" / "contains") { return v.toUpperCase(); }
-SW = v:("STARTS WITH" / "starts with") { return v.toUpperCase(); }
-EW = v:("ENDS WITH" / "ends with") { return v.toUpperCase(); }
+CONTAINS = v:("CONTAINS" / "contains") { return v.toLowerCase(); }
+SW = v:("STARTS WITH" / "starts with") { return v.toLowerCase(); }
+EW = v:("ENDS WITH" / "ends with") { return v.toLowerCase(); }
 L_PAR    = "("
 R_PAR    = ")"
 DQ       = '"'
@@ -116,15 +124,15 @@ SC       = ","
 TRUE     = 'true'
 FALSE    = 'false'
 NOT      = '!'
-EM      = v:("EXACTLY MATCHES" / "exactly matches") { return v.toUpperCase(); }
-DNCONTAIN = v:("DOES NOT CONTAIN" / "does not contain") { return v.toUpperCase(); }
-LIKE     = v:("LIKE" / "like") { return v.toUpperCase(); }
-BTW     = v:("BETWEEN" / "between") { return v.toUpperCase(); }
-NBTW     = v:("NOT BETWEEN" / "not between") { return v.toUpperCase(); }
-IN     = v:("IN" / "in") { return v.toUpperCase(); }
-NIN     = v:("NOT IN" / "not in") { return v.toUpperCase(); }
-NULL     = v:("NULL" / "null") { return v.toUpperCase(); }
-NNULL     = v:("NOT NULL" / "not null") { return v.toUpperCase(); }
+EM      = v:("EXACTLY MATCHES" / "exactly matches") { return v.toLowerCase(); }
+DNCONTAIN = v:("DOES NOT CONTAIN" / "does not contain") { return v.toLowerCase(); }
+LIKE     = v:("LIKE" / "like") { return v.toLowerCase(); }
+BTW     = v:("BETWEEN" / "between") { return v.toLowerCase(); }
+NBTW     = v:("NOT BETWEEN" / "not between") { return v.toLowerCase(); }
+IN     = v:("IN" / "in") { return v.toLowerCase(); }
+NIN     = v:("NOT IN" / "not in") { return v.toLowerCase(); }
+NULL     = v:("IS NULL" / "is null") { return v.toLowerCase(); }
+NNULL     = v:("IS NOT NULL" / "is not null") { return v.toLowerCase(); }
 
 
 ///// Types /////

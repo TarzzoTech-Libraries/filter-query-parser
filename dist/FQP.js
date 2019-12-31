@@ -42,7 +42,7 @@ PEG = (function() {
         peg$c3 = { type: "literal", value: "AND", description: "\"AND\"" },
         peg$c4 = "and",
         peg$c5 = { type: "literal", value: "and", description: "\"and\"" },
-        peg$c6 = function(v) { return v.toUpperCase(); },
+        peg$c6 = function(v) { return v.toLowerCase(); },
         peg$c7 = "OR",
         peg$c8 = { type: "literal", value: "OR", description: "\"OR\"" },
         peg$c9 = "or",
@@ -113,14 +113,14 @@ PEG = (function() {
         peg$c74 = { type: "literal", value: "NOT IN", description: "\"NOT IN\"" },
         peg$c75 = "not in",
         peg$c76 = { type: "literal", value: "not in", description: "\"not in\"" },
-        peg$c77 = "NULL",
-        peg$c78 = { type: "literal", value: "NULL", description: "\"NULL\"" },
-        peg$c79 = "null",
-        peg$c80 = { type: "literal", value: "null", description: "\"null\"" },
-        peg$c81 = "NOT NULL",
-        peg$c82 = { type: "literal", value: "NOT NULL", description: "\"NOT NULL\"" },
-        peg$c83 = "not null",
-        peg$c84 = { type: "literal", value: "not null", description: "\"not null\"" },
+        peg$c77 = "IS NULL",
+        peg$c78 = { type: "literal", value: "IS NULL", description: "\"IS NULL\"" },
+        peg$c79 = "is null",
+        peg$c80 = { type: "literal", value: "is null", description: "\"is null\"" },
+        peg$c81 = "IS NOT NULL",
+        peg$c82 = { type: "literal", value: "IS NOT NULL", description: "\"IS NOT NULL\"" },
+        peg$c83 = "is not null",
+        peg$c84 = { type: "literal", value: "is not null", description: "\"is not null\"" },
         peg$c85 = /^[0-9]/,
         peg$c86 = { type: "class", value: "[0-9]", description: "[0-9]" },
         peg$c87 = /^[0-9a-f]/i,
@@ -951,17 +951,17 @@ PEG = (function() {
       var s0, s1;
 
       s0 = peg$currPos;
-      if (input.substr(peg$currPos, 4) === peg$c77) {
+      if (input.substr(peg$currPos, 7) === peg$c77) {
         s1 = peg$c77;
-        peg$currPos += 4;
+        peg$currPos += 7;
       } else {
         s1 = peg$FAILED;
         if (peg$silentFails === 0) { peg$fail(peg$c78); }
       }
       if (s1 === peg$FAILED) {
-        if (input.substr(peg$currPos, 4) === peg$c79) {
+        if (input.substr(peg$currPos, 7) === peg$c79) {
           s1 = peg$c79;
-          peg$currPos += 4;
+          peg$currPos += 7;
         } else {
           s1 = peg$FAILED;
           if (peg$silentFails === 0) { peg$fail(peg$c80); }
@@ -980,17 +980,17 @@ PEG = (function() {
       var s0, s1;
 
       s0 = peg$currPos;
-      if (input.substr(peg$currPos, 8) === peg$c81) {
+      if (input.substr(peg$currPos, 11) === peg$c81) {
         s1 = peg$c81;
-        peg$currPos += 8;
+        peg$currPos += 11;
       } else {
         s1 = peg$FAILED;
         if (peg$silentFails === 0) { peg$fail(peg$c82); }
       }
       if (s1 === peg$FAILED) {
-        if (input.substr(peg$currPos, 8) === peg$c83) {
+        if (input.substr(peg$currPos, 11) === peg$c83) {
           s1 = peg$c83;
-          peg$currPos += 8;
+          peg$currPos += 11;
         } else {
           s1 = peg$FAILED;
           if (peg$silentFails === 0) { peg$fail(peg$c84); }
@@ -2141,12 +2141,12 @@ PEG = (function() {
         };
 
         const cops = [
-            ['GE', '>='],
-            ['LE', '<='],
-            ['EQ', '='],
-            ['NE', '!='],
-            ['GT', '>'],
-            ['LT', '<'],
+            ['GE', 'greater than or equals'],
+            ['LE', 'lesser than or equals'],
+            ['EQ', 'equals'],
+            ['NE', 'not equals'],
+            ['GT', 'greater than'],
+            ['LT', 'lesser than'],
             ['CONTAINS', 'CONTAINS'],
             ['SW', 'STARTS WITH'],
             ['EW', 'ENDS WITH'],
@@ -2157,8 +2157,8 @@ PEG = (function() {
             ['NBTW', 'NOT BETWEEN'],
             ['IN', 'IN'],
             ['NIN', 'NOT IN'],
-            ['NULL', 'NULL'],
-            ['NNULL', 'NOT NULL']
+            ['NULL', 'IS NULL'],
+            ['NNULL', 'IS NOT NULL']
         ];
         class ComparisonOperator {
             constructor(name, op) {
@@ -2178,9 +2178,17 @@ PEG = (function() {
             static fromString(str) {
                 switch (str) {
                     case '=':
-                        str = '='; break;
+                        str = 'equals'; break;
                     case '!=':
-                        str = '!='; break;
+                        str = 'not equals'; break;
+                    case '>':
+                        str = 'greater than'; break;
+                    case '<':
+                        str = 'lesser than'; break;
+                    case '>=':
+                        str = 'greater than or equals'; break;
+                    case '<=':
+                        str = 'lesser than or equals'; break;
                     default:
                         str = str.toUpperCase(); break;
                 }
@@ -2242,11 +2250,40 @@ PEG = (function() {
     parse:       peg$parse
   };
 })();
+function buildArrayValues(values) {
+	let txt = ''
+	values.forEach((val,i) =>{      
+		txt += (typeof val === 'string' ? `"${val}"` : val);
+		if (i !== values.length - 1) {
+			txt += ',';
+		}
+	});
+	return txt;
+}
+
 function conditionBuilder(rule, customField) {
-	const value = typeof rule.value === 'string' ?
-		`"${rule.value}"` : typeof rule.value === 'object' ? `(${rule.value})` : rule.value;
-	let condStr = `${rule[customField] || rule.field} ${rule.operator} ${value}`;
+	const value = rule.value && typeof rule.value === 'string' ?
+	  `"${rule.value}"` : typeof rule.value === 'object' ? `(${buildArrayValues(rule.value)})` : rule.value;
+	const condStr = `${rule[customField] || rule.field} ${getOperator(rule.operator)} ${value}`;
 	return condStr;
+}
+
+function getOperator(operator){
+	switch(operator){
+	  case("greater than"):
+	   return ">"; 
+	   case("lesser than"):
+	   return "<";
+	   case("greater than or equals"):
+	   return ">="; 
+	   case("lesser than or equals"):
+	   return "<=";
+	   case("equals"):
+	   return "=";
+	   case("not equals"):
+	   return "!=";
+	   default : return operator;
+	}
 }
 
 function queryBuilder(obj = [], customField) {

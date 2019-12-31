@@ -1,6 +1,6 @@
 {
    "name": "filter-query-parser",
-   "version": "2.2.0",
+   "version": "2.2.0-rc",
    "description": "Library for parsing the query string to an Object form and stringify Object to query string.",
    "keywords": [
       "Object",
