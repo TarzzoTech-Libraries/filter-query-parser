@@ -4,6 +4,10 @@ Library for parsing the query string to an Object form and stringify Object to q
 
 [Try](https://vjd7.github.io/filter-query-parser/) it in console by typing FQP.
 
+*This library is inspired from the open source library [artista-jql](https://www.npmjs.com/package/artista-jql).*
+
+*The parsed output object of filter-query-parser and input for stringify is build based on the output of the Angular library [angular2-query-builder](https://zebzhao.github.io/Angular-QueryBuilder/demo/).*
+
 
 ## Installation
 ```sh
@@ -116,6 +120,8 @@ Age <= 25 AND (Gender = "Male" OR School contains "School")
 | NOT BETWEEN | Check the value are NOT BETWEEN the right values                                                                                      |
 | IN       | Check the value are IN the right values                                                                                                  |
 | NOT IN   | Check the value are NOT IN the right values                                                                                              |
+| NULL     | Check the value is NULL                                                                                                                  |
+| NOT NULL | Check the value is NOT NULL                                                                                                              |
 
 
 
