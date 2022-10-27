@@ -7,7 +7,7 @@
       "query",
       "parsing"
    ],
-   "homepage": "https://github.com/VJD7/filter-query-parser#readme",
+   "homepage": "https://github.com/TarzzoTech-Libraries/filter-query-parser#readme",
    "author": "Vijay Deepak",
    "license": "ISC",
    "main": "dist/FQP.js",
