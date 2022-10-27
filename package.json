@@ -11,7 +11,7 @@
    "author": "Vijay Deepak",
    "license": "ISC",
    "main": "dist/FQP.js",
-   "repository": "https://github.com/VJD7/filter-query-parser",
+   "repository": "https://github.com/TarzzoTech-Libraries/filter-query-parser",
    "dependencies": {
       "pegjs": "^0.9.0"
    },
